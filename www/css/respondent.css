@@ -1,0 +1,29 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.block {
+	position: relative;
+	margin: 16px;
+	border: solid 4px;
+	height: 170px;
+}
+
+#block_dest {
+	border-color: green;
+}
+
+#block_source {
+	border-color: blue;
+}
+
+.assertion {
+	display: block-inline;
+	float: left;
+	position: relative;
+	margin: 8px;
+	padding: 8px;
+	border: solid 2px;
+	border-color: inherit;
+}
