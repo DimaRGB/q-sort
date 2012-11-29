@@ -8,7 +8,7 @@ function drag(e, ui) {
 
 function drop(e, ui) {
 	e.preventDefault();
-	if (ui.className != 'block')
+	if (ui.className != 'block' || getAssertionCount(ui) >= ui.title)
 		return;
 	var data = e.dataTransfer.getData('Text');
 	var json;
@@ -18,4 +18,8 @@ function drop(e, ui) {
 		json = eval('(' + data + ')');
 	if (json.blockId != ui.id)
 		ui.appendChild(document.getElementById(json.assertionId));
+}
+
+function getAssertionCount(block) {
+	return block.childElementCount;
 }

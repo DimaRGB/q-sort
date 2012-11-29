@@ -10,7 +10,11 @@
 	height: 170px;
 }
 
-#block_dest {
+#block_dest1 {
+	border-color: red;
+}
+
+#block_dest2 {
 	border-color: green;
 }
 
