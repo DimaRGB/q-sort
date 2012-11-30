@@ -3,31 +3,55 @@
 	padding: 0;
 }
 
-.block {
+body {
+	background-color: #AAA;
+}
+
+#nextButton {
+	padding: 4px;
+}
+
+.level {
+	background-color: white;
+	display: block;
 	position: relative;
-	margin: 16px;
-	border: solid 4px;
-	height: 170px;
+	margin: 10px 0px;
+	border: solid 2px;
+	width: 100%;
+	border-collapse: collapse;
+	min-height: 45%;
 }
 
-#block_dest1 {
-	border-color: red;
+#level2 {
+	display: none;
+	border-color: #123;
 }
 
-#block_dest2 {
-	border-color: green;
+#level1 {
+	border-color: #456;
 }
 
-#block_source {
-	border-color: blue;
+#level0 {
+	border-color: #789;
+}
+
+.grade {
+	border: solid 1px;
+	border-color: inherit;
+	height: 100%;
+	vertical-align: bottom;
+}
+
+#grade00 {
+	vertical-align: top;
 }
 
 .assertion {
-	display: block-inline;
-	float: left;
+	display: block;
 	position: relative;
-	margin: 8px;
-	padding: 8px;
-	border: solid 2px;
-	border-color: inherit;
+	padding: 2px;
+}
+
+.assertion:hover {
+	background-color: #088;
 }
