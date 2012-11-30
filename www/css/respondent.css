@@ -11,15 +11,19 @@ body {
 	padding: 4px;
 }
 
+#okButton {
+	padding: 8px;
+}
+
 .level {
 	background-color: white;
-	display: block;
+	display: table;
 	position: relative;
 	margin: 10px 0px;
 	border: solid 2px;
 	width: 100%;
 	border-collapse: collapse;
-	min-height: 45%;
+	height: 40%;
 }
 
 #level2 {
@@ -35,14 +39,14 @@ body {
 	border-color: #789;
 }
 
-.grade {
+.degree {
 	border: solid 1px;
 	border-color: inherit;
 	height: 100%;
 	vertical-align: bottom;
 }
 
-#grade00 {
+#degree00 {
 	vertical-align: top;
 }
 
