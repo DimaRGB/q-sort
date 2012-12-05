@@ -5,12 +5,14 @@
 <!-- jquery -->
 	<script type='text/javascript' src='script/jquery-1.8.3.min.js'></script>
 	<script type='text/javascript' src='script/jquery-ui-1.9.2.min.js'></script>
+<!-- json2 -->
+	<script type='text/javascript' src='script/json2.js'></script>
 <!-- respondent -->
 	<link type='text/css' rel='stylesheet' href='css/respondent.css' />
 	<script type='text/javascript' src='script/respondent.js'></script>
 </head>
 <body>
-	<button id='next' disabled='disabled'>Продовжити</button>
+	<button id='next' >Продовжити</button>
 	<?php
 	//read set from file
 		$set = json_decode(file_get_contents('set1 (40)test.json'), true);

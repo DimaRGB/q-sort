@@ -7,20 +7,21 @@ $(document).ready(function() {
 	$('button').click(function(e) {
 		var but = e.target;
 		if (but.id == 'next') {
-			but.id = 'finish';
 			but.disabled = 'disabled';
-			$('#level0').animate({opacity: 0, height: 0}, 1000, function() {
+			$('#level0').animate({opacity: 0}, 1000, function() {
 				$(this).hide();
-				$('#level2').show();
-				$('#level2').animate({opacity: 1, height: 250}, 1000);
+				$('#level2').show().css('opacity', '0');
+				lowerLevel = 'level1';
+				but.id = 'finish';
 				$(but).text('Завершити');
+				$('#level2').animate({opacity: 1}, 1000);
 			});
-		} else if (ui.id == 'finish') {
-			var json = {"degree":[]};
-			count = parseInt($('#degree00').title);
+		} else if (but.id == 'finish') {
+			var json = [];
+			count = parseInt($('#degree00').attr('title'));
 			for (var i = 0; i < count; i++) {
-				var degree = $('#assertion' + i).parentNode;
-				json.degree[i] = parseInt(degree.id.substring('degree2'.length)) + 1;
+				var degree = $('#assertion' + i)[0].parentNode;
+				json[i] = parseInt(degree.id.substring('degree2'.length)) + 1;
 			}
 			alert(JSON.stringify(json));
 		}
@@ -40,7 +41,7 @@ $(document).ready(function() {
 			srcId = e.target.parentNode.id;
 		},
 		stop: function() {
-			$(this).removeAttr('class').removeAttr('style');
+			$(this).removeAttr('style').removeAttr('class');
 		}
 	});
 	
@@ -55,7 +56,7 @@ $(document).ready(function() {
 		/////
 			var isLevelEmpty = true;
 			$('#' + lowerLevel + ' td').each(function(i, el) {
-				isLevelEmpty = $(el).children().length == 0;
+				isLevelEmpty &= $(el).children().length == 0;
 				if (!isLevelEmpty)
 					return;
 			});
