@@ -1,44 +1,39 @@
+<!Doctype html>
 <html>
 <head>
 	<meta charset='utf-8' />
-	<script type='text/javascript' src='script/respondent.js'></script>
+<!-- jquery -->
+	<script type='text/javascript' src='script/jquery-1.8.3.min.js'></script>
+	<script type='text/javascript' src='script/jquery-ui-1.9.2.min.js'></script>
+<!-- respondent -->
 	<link type='text/css' rel='stylesheet' href='css/respondent.css' />
+	<script type='text/javascript' src='script/respondent.js'></script>
 </head>
 <body>
-	<button id='nextButton' disabled='disabled' onclick='clickButton(event, this)'>Продовжити</button>
-	<table class='level' id='level2'>
-		<?php
-			$n = 7;
-			echo "<tr>";
-			for ($i = 0; $i < $n; $i++)
-				echo "<th class='degreeHead' id='degreeHead2$i'>Погоджуюсь".(2*$i)."</th>";
+	<button id='next' disabled='disabled'>Продовжити</button>
+	<?php
+	//read set from file
+		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
+		echo "<center><h2>".$set['name']."</h2></center>";
+		$level = $set['level'];
+	//level2, level1
+		for ($k = 2; $k > 0; $k--) {
+			echo "<table class='level' id='level$k'><tr>";
+			foreach ($level[$k] as $value => $count)
+				echo "<th>$value ($count)</th>";
 			echo "</tr><tr>";
-			for ($i = 0; $i < $n; $i++)
-				echo "<td class='degree' id='degree2$i' title='".(4*($i+1))."' ondrop='drop(event, this)' ondragover='allowDrop(event)'></td>";
-			echo "</tr>";
-		?>
-	</table>
-	<table class='level' id='level1'>
-		<?php
-			$n = 3;
-			echo "<tr>";
-			for ($i = 0; $i < $n; $i++)
-				echo "<th class='degreeHead' id='degreeHead1$i'>Погоджуюсь$i</th>";
-			echo "</tr><tr>";
-			for ($i = 0; $i < $n; $i++)
-				echo "<td class='degree' id='degree1$i' title='".(4*($i+1))."' ondrop='drop(event, this)' ondragover='allowDrop(event)'></td>";
-			echo "</tr>";
-		?>
-	</table>
-	<table class='level' id='level0'>
-		<tr><th class='degreeHead'>Твердження</th></tr>
-		<?php
-			$n = 6;
-			echo "<tr><td class='degree' id='degree00' title='$n' ondrop='drop(event, this)' ondragover='allowDrop(event)'>";
-			for ($i = 0; $i < $n; $i++)
-				echo "<div class='assertion' id='assertion$i' draggable='true' ondragstart='drag(event, this)'>".($i+1).". Assertion</div>";
-		?>
-		</td></tr>
-	</table>
+			$i = 0;
+			foreach ($level[$k] as $value => $count)
+				echo "<td id='degree$k".($i++)."' title='$count'></td>";
+			echo "</tr></table>";
+		}
+	//level0
+		echo "<table class='level' id='level0'>";
+		echo "<tr><th>Твердження (".count($level[0]).")</th></tr>";
+		echo "<tr><td id='degree00' title='".count($level[0])."'>";
+		foreach ($level[0] as $i => $assertion)
+			echo "<div id='assertion$i'>$assertion.</div>";
+		echo "</td></tr></table>";
+	?>
 </body>
 </html>

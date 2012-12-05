@@ -1,60 +1,68 @@
-function clickButton(e, ui) {
-	if (ui.id == 'nextButton') {
-		ui.id = 'okButton';
-		ui.disabled = 'disabled';
-		ui.innerHTML = 'Завершити';
-		var level2 = document.getElementById('level2');
-		var level0 = document.getElementById('level0');
-		level2.style.display = 'table';
-		level0.style.display = 'none';
-	} else if (ui.id == 'okButton') {
-		var json = {"degree":[]};
-		count = parseInt(document.getElementById('degree00').title);
-		for (var i = 0; i < count; i++) {
-			var degree = document.getElementById('assertion' + i).parentNode;
-			json.degree[i] = parseInt(degree.id.substring('degree2'.length)) + 1;
+$(document).ready(function() {
+///// Global variable
+	var srcId, lowerLevel = 'level0';
+/////
+	$('*').disableSelection();
+/////
+	$('button').click(function(e) {
+		var but = e.target;
+		if (but.id == 'next') {
+			but.id = 'finish';
+			but.disabled = 'disabled';
+			$('#level0').animate({opacity: 0, height: 0}, 1000, function() {
+				$(this).hide();
+				$('#level2').show();
+				$('#level2').animate({opacity: 1, height: 250}, 1000);
+				$(but).text('Завершити');
+			});
+		} else if (ui.id == 'finish') {
+			var json = {"degree":[]};
+			count = parseInt($('#degree00').title);
+			for (var i = 0; i < count; i++) {
+				var degree = $('#assertion' + i).parentNode;
+				json.degree[i] = parseInt(degree.id.substring('degree2'.length)) + 1;
+			}
+			alert(JSON.stringify(json));
 		}
-		alert(JSON.stringify(json));
-	}
-}
-
-function allowDrop(e, ui) {
-	e.preventDefault();
-}
-
-function drag(e, ui) {
-	var json = {"degreeId":"","assertionId":""};
-	json.degreeId = ui.parentNode.id;
-	json.assertionId = ui.id;
-	e.dataTransfer.setData('Text', JSON.stringify(json));
-}
-
-function drop(e, ui) {
-	e.preventDefault();
-	if (ui.className != 'degree' || ui.childElementCount >= ui.title)
-		return;
-	var data = e.dataTransfer.getData('Text');
-	var json = JSON.parse(data);
-	if (json.degreeId != ui.id)
-		ui.appendChild(document.getElementById(json.assertionId));
-
-	var button, level;
-	if ((button = document.getElementById('nextButton')) != null)
-		level = document.getElementById('level0');
-	else if ((button = document.getElementById('okButton')) != null)
-		level = document.getElementById('level1');
-
-	if (isLevelEmpty(level))
-		button.disabled = ''; else
-	if (button.disabled == '')
-		button.disabled = 'disabled';
-}
-
-function isLevelEmpty(level) {
-	greats = level.rows[1].cells;
-	for (var i = 0; i < greats.length; i++) {
-		if (greats[i].childElementCount > 0)
-			return false;
-	}
-	return true;
-}
+	});
+/////
+	$('.level div').draggable({
+		addClasses: false,
+		containment: 'body',
+		cursor: 'move',
+		cursorAt: {
+			left: $('.level div').width(),
+			top: $('.level div').height()
+		},
+		distance: 8,
+		zIndex: 4000,
+		start: function(e) {
+			srcId = e.target.parentNode.id;
+		},
+		stop: function() {
+			$(this).removeAttr('class').removeAttr('style');
+		}
+	});
+	
+	$('.level td').droppable({
+		addClasses: false,
+		//hoverClass: 'dropHere',
+		drop: function(e, ui) {
+			var degree = e.target;
+			if (degree.id == srcId || $(degree).children().length >= parseInt(degree.title))
+				return;
+			$(ui.draggable).appendTo(degree);
+		/////
+			var isLevelEmpty = true;
+			$('#' + lowerLevel + ' td').each(function(i, el) {
+				isLevelEmpty = $(el).children().length == 0;
+				if (!isLevelEmpty)
+					return;
+			});
+			if (isLevelEmpty)
+				$('button').removeAttr('disabled');
+			else if (!$('button').attr('disabled'))
+				$('button').attr('disabled', 'disabled');
+		}
+	});
+});
