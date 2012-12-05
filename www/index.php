@@ -12,7 +12,7 @@
 	<script type='text/javascript' src='script/respondent.js'></script>
 </head>
 <body>
-	<button id='next' >Продовжити</button>
+	<button id='next' disabled='disabled'>Продовжити</button>
 	<?php
 	//read set from file
 		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
