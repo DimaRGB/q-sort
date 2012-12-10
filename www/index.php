@@ -16,25 +16,25 @@
 	<?php
 	//read set from file
 		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
-		echo "<center><h2>".$set['name']."</h2></center>";
+		echo "<center><h3 id='nameSet'>".$set['name']."</h3></center>";
 		$level = $set['level'];
 	//level2, level1
 		for ($k = 2; $k > 0; $k--) {
-			echo "<table class='level' id='level$k'><tr>";
+			echo "<table id='level$k'><tr>";
 			foreach ($level[$k] as $value => $count)
-				echo "<th>$value ($count)</th>";
+				echo "<th>$count<br />$value</th>";
 			echo "</tr><tr>";
 			$i = 0;
 			foreach ($level[$k] as $value => $count)
-				echo "<td id='degree$k".($i++)."' title='$count'></td>";
+				echo "<td title='$count'></td>";
 			echo "</tr></table>";
 		}
 	//level0
-		echo "<table class='level' id='level0'>";
-		echo "<tr><th>Твердження (".count($level[0]).")</th></tr>";
-		echo "<tr><td id='degree00' title='".count($level[0])."'>";
+		echo "<table id='level0'>";
+		echo "<tr><th>".count($level[0])."<br />Твердження</th></tr>";
+		echo "<tr><td title='".count($level[0])."'>";
 		foreach ($level[0] as $i => $assertion)
-			echo "<div id='assertion$i'>$assertion.</div>";
+			echo "<div>$assertion</div>";
 		echo "</td></tr></table>";
 	?>
 </body>
