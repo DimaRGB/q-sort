@@ -15,7 +15,7 @@
 	<button id='next' disabled='disabled'>Продовжити</button>
 	<?php
 	//read set from file
-		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
+		$set = json_decode(file_get_contents('set1 (40).json'), true);
 		echo "<center><h3 id='nameSet'>".$set['name']."</h3></center>";
 		$level = $set['level'];
 	//level2, level1
@@ -34,7 +34,7 @@
 		echo "<tr><th>".count($level[0])."<br />Твердження</th></tr>";
 		echo "<tr><td title='".count($level[0])."'>";
 		foreach ($level[0] as $i => $assertion)
-			echo "<div>$assertion</div>";
+			echo "<div title='$assertion'>$assertion</div>";
 		echo "</td></tr></table>";
 	?>
 </body>

@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var divHeight = parseInt(1.4 * divWidth);
 ///// Original settings
 	$('table').wrap('<center />');
-	$('table td').height(divHeight);
+	$('table td').height(2 * divHeight);
 	for (var k = 0; k < 3; k++) {
 		var levelDegree = $('#level' + k + ' td');
 		levelDegree.each(function(i, degree) {
@@ -24,8 +24,13 @@ $(document).ready(function() {
 	$('#level0 div').each(function(i, el) {
 		el.id = 'assertion' + i;
 	});
-	$('#level2').hide();
 	$('*').disableSelection();
+	$('#level2').hide();
+	$('#level0, #level1').css('opacity', '0');
+	$('#level1').animate({opacity: 0.3}, 300, function() {
+		$('#level1').animate({opacity: 1}, 600);
+		$('#level0').animate({opacity: 1}, 1200);
+	});
 ///// Resize
 	function resizeWindow() {
 		$('div').outerWidth(divWidth);
@@ -33,8 +38,10 @@ $(document).ready(function() {
 		$('table').each(function(i, el) {
 			var td = $('#' + el.id + ' td');
 			td.width(divWidth * (parseInt($(window).width() / divWidth / td.length)));
+			//var w = parseInt(td.css('width'));
+			//alert(w);
 		});
-		return;
+		//$('#level1').css('width', 1134);
 	}
 	resizeWindow();
 	$(window).resize(resizeWindow);
@@ -43,13 +50,13 @@ $(document).ready(function() {
 		var but = e.target;
 		if (but.id == 'next') {
 			but.disabled = 'disabled';
-			$('#level0').animate({opacity: 0}, 1000, function() {
+			$('#level0').animate({opacity: 0}, 600, function() {
 				$(this).hide();
 				$('#level2').show().css('opacity', '0');
 				lowerLevel = 'level1';
 				but.id = 'finish';
 				$(but).text('Завершити');
-				$('#level2').animate({opacity: 1}, 1000);
+				$('#level2').animate({opacity: 1}, 1500);
 			});
 		} else if (but.id == 'finish') {
 			var json = [];
@@ -75,7 +82,7 @@ function correctionDegree(degree) {
 ///// Draggable
 	$('table div.assertion').draggable({
 		addClasses: false,
-		containment: 'body',
+		containment: 'window',
 		cursor: 'move',
 		distance: 8,
 		zIndex: 4000,
@@ -88,7 +95,12 @@ function correctionDegree(degree) {
 			var prevLength = $(e.target.parentNode).prevAll().length;
 			if (prevLength > nextLength)
 				currentFloat = 'right';
-			$(this).css({left: '', top: '', zIndex: '', float: currentFloat});
+			$(this).css({left: '', top: 0, zIndex: '', float: currentFloat});
+			$(this).animate({opacity: 0.7, left: -8, top: 2},
+				70).animate({opacity: 0.8, left: 8, top: 4},
+				70).animate({opacity: 0.9, left: -8, top: 2},
+				70).animate({opacity: 1, left: 0, top: 0},
+				70);
 		}
 	});
 ///// Dropabble
