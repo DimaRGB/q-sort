@@ -73,7 +73,7 @@ table td {
 
 table div {
 	position: relative;
-	padding: 1px 0px 0px 2px;
+	padding: 1px 2px;
 	border: 1px solid #272822;
 }
 
@@ -90,26 +90,17 @@ table div.assertion {
 	word-wrap: break-word;
 }
 
-table div.bigAssertion {
-	background-color: red;
-	z-index: 5000;
-}
-
-.hoverClass {
-	border: 3px dashed #A6E22E;
-}
-
-/*.assertion:hover {
-	width: 120px;
-	box-shadow: 0px 0px 20px #333;
-	border-radius: 0px;
-	border: 6px solid rgb(197, 247, 193);
+.bigAssertion {
 	position: fixed;
 	z-index: 5000;
-	width: 180px;
-	height: 252px;
-	left: 1100px;
-	bottom: 0px;
-	font-size: 14px;
-	overflow: auto;
-}*/
+	border: 8px solid #AE81FF;
+	background-color: #272822;
+	color: #F8F8F2;
+	padding: 3px;
+	font-size: 12px;
+	text-align: left;
+	text-indent: 20px;
+	line-height: 18px;
+	overflow: hidden;
+	word-wrap: break-word;
+}

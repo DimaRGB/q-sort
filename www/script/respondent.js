@@ -5,9 +5,10 @@ $(document).ready(function() {
 	var countTd = $('#level2 td').length;
 	var divWidth = parseInt(0.98 * $(window).width() / countTd / 2);
 	var divHeight = parseInt(1.4 * divWidth);
+	var isDrag = false, big = 2;
 ///// Original settings
 	$('table').wrap('<center />');
-	$('table td').height(2 * divHeight);
+	$('table td').height(big * divWidth);
 	for (var k = 0; k < 3; k++) {
 		var levelDegree = $('#level' + k + ' td');
 		levelDegree.each(function(i, degree) {
@@ -23,6 +24,7 @@ $(document).ready(function() {
 	$('#level0 div').addClass('assertion');
 	$('#level0 div').each(function(i, el) {
 		el.id = 'assertion' + i;
+		el.title = el.innerText;
 	});
 	$('*').disableSelection();
 	$('#level2').hide();
@@ -31,17 +33,17 @@ $(document).ready(function() {
 		$('#level1').animate({opacity: 1}, 600);
 		$('#level0').animate({opacity: 1}, 1200);
 	});
+///// setBounds
+	function setBounds(selector, l, t, w, h) {
+		$(selector).css({'left': l, 'top': t}).outerWidth(w).outerHeight(h);
+	}
 ///// Resize
 	function resizeWindow() {
-		$('div').outerWidth(divWidth);
-		$('div').outerHeight(divHeight);
+		setBounds('div', 0, 0, divWidth, divHeight);
 		$('table').each(function(i, el) {
 			var td = $('#' + el.id + ' td');
 			td.width(divWidth * (parseInt($(window).width() / divWidth / td.length)));
-			//var w = parseInt(td.css('width'));
-			//alert(w);
 		});
-		//$('#level1').css('width', 1134);
 	}
 	resizeWindow();
 	$(window).resize(resizeWindow);
@@ -88,8 +90,11 @@ function correctionDegree(degree) {
 		zIndex: 4000,
 		start: function(e) {
 			srcDegree = e.target.parentNode;
+			isDrag = true;
 		},
 		stop: function(e) {
+			isDrag = false;
+			cancelBigAssertion(this);
 			var currentFloat = 'left';
 			var nextLength = $(e.target.parentNode).nextAll().length;
 			var prevLength = $(e.target.parentNode).prevAll().length;
@@ -106,7 +111,6 @@ function correctionDegree(degree) {
 ///// Dropabble
 	$('table td').droppable({
 		addClasses: false,
-		//hoverClass: 'hoverClass',
 		drop: function(e, ui) {
 			var degree = e.target;
 			var max = parseInt(degree.title);
@@ -128,10 +132,30 @@ function correctionDegree(degree) {
 				$('button').attr('disabled', 'disabled');
 		}
 	});
+///// cancelBigAssertion
+	function cancelBigAssertion(assertion) {
+		$(assertion).attr('class', 'assertion');
+		setBounds(assertion, 0, 0, divWidth, divHeight);
+	}
 ///// Assertion click
-	$('table div.assertion').click(function() {
-		$(this).addClass('bigAssertion');
+	$('table div.assertion').click(function(e) {
+		if ($(this).attr('class') == 'assertion') {
+			$(this).attr('class', 'bigAssertion');
+			var w = big * divHeight, h = big * divWidth;
+			var l = e.clientX - w / 2, t = e.clientY - h / 2;
+			if (l < 0)
+				l = 0;
+			else if(l > window.innerWidth - w)
+				l = window.innerWidth - w;
+			if (t < 0)
+				t = 0;
+			else if(t > window.innerHeight - h)
+				t = window.innerHeight - h;
+			setBounds(this, l, t, w, h);
+		} else
+			cancelBigAssertion(this);
 	}).mouseleave(function() {
-		$(this).removeClass('bigAssertion');
+		if (!isDrag)
+			cancelBigAssertion(this);
 	});
 });

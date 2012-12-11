@@ -34,7 +34,7 @@
 		echo "<tr><th>".count($level[0])."<br />Твердження</th></tr>";
 		echo "<tr><td title='".count($level[0])."'>";
 		foreach ($level[0] as $i => $assertion)
-			echo "<div title='$assertion'>$assertion</div>";
+			echo "<div>$assertion.</div>";
 		echo "</td></tr></table>";
 	?>
 </body>
