@@ -16,7 +16,7 @@
 	<?php
 	//read set from file
 		$set = json_decode(file_get_contents('set1 (40).json'), true);
-		echo "<center><h3 id='nameSet'>".$set['name']."</h3></center>";
+		echo "<h3 id='nameSet'>".$set['name']."</h3>";
 		$level = $set['level'];
 	//level2, level1
 		for ($k = 2; $k > 0; $k--) {

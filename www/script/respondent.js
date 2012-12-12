@@ -7,7 +7,7 @@ $(document).ready(function() {
 	var divHeight = parseInt(1.4 * divWidth);
 	var isDrag = false, big = 2;
 ///// Original settings
-	$('table').wrap('<center />');
+	//$('#nameSet, table').wrap('<div style="text-align:center;"></div>');
 	$('table td').height(big * divWidth);
 	for (var k = 0; k < 3; k++) {
 		var levelDegree = $('#level' + k + ' td');
@@ -39,7 +39,7 @@ $(document).ready(function() {
 	}
 ///// Resize
 	function resizeWindow() {
-		setBounds('div', 0, 0, divWidth, divHeight);
+		setBounds('table div', 0, 0, divWidth, divHeight);
 		$('table').each(function(i, el) {
 			var td = $('#' + el.id + ' td');
 			td.width(divWidth * (parseInt($(window).width() / divWidth / td.length)));
