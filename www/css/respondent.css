@@ -30,15 +30,18 @@ button {
 
 table {
 	position: relative;
-	border-collapse: collapse;
+	border-spacing: 0px;
 	table-layout: fixed;
-	margin: 8px 0px;
+	margin: 12px 0px;
 	background-color: #272822;
 	box-shadow: 0px 4px 8px black;
 }
 
-table th {
+table th, table td {
 	border: 2px solid #75715E;
+}
+
+table th {
 	font-size: 12px;
 	font-weight: normal;
 	overflow: hidden;
@@ -62,7 +65,6 @@ table th:first-line {
 }
 
 table td {
-	border: 2px solid #75715E;
 	height: 100%;
 	vertical-align: top;
 }
@@ -74,7 +76,8 @@ table td {
 table div {
 	position: relative;
 	padding: 1px 2px;
-	border: 1px solid #272822;
+	border: 1px solid;
+	border-color: inherit;
 }
 
 table div.empty {
@@ -103,4 +106,12 @@ table div.assertion {
 	line-height: 18px;
 	overflow: hidden;
 	word-wrap: break-word;
+}
+
+.hoverDrop {
+	border-color: #A6E22E;
+}
+
+.hoverNotDrop {
+	border-color: #F92672;
 }

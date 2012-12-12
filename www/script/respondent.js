@@ -3,7 +3,7 @@ $(document).ready(function() {
 ///// Global variable
 	var srcDegree, lowerLevel = 'level0';
 	var countTd = $('#level2 td').length;
-	var divWidth = parseInt(0.98 * $(window).width() / countTd / 2);
+	var divWidth = parseInt(0.97 * $(window).width() / countTd / 2);
 	var divHeight = parseInt(1.4 * divWidth);
 	var isDrag = false, big = 2;
 ///// Original settings
@@ -71,16 +71,20 @@ $(document).ready(function() {
 		}
 	});
 ///// Correction degree
-function correctionDegree(degree) {
-	var level = degree.parentNode.parentNode.parentNode;
-	if (level.id == 'level2') {
-		var empty = $('#' + degree.id + ' div.empty');
-		if (empty.css('display') == 'none')
-			empty.show();
+	function correctionDegree(degree) {
+		var level = degree.parentNode.parentNode.parentNode;
+		if (level.id == 'level2') {
+			var empty = $('#' + degree.id + ' div.empty');
+			if (empty.css('display') == 'none')
+				empty.show();
+			else
+				empty.hide();
+		};
+		if ($(degree).children('.assertion').length >= parseInt(degree.title))
+			$(degree).droppable({hoverClass: 'hoverNotDrop'});
 		else
-			empty.hide();
+			$(degree).droppable({hoverClass: 'hoverDrop'});
 	}
-}
 ///// Draggable
 	$('table div.assertion').draggable({
 		addClasses: false,
@@ -111,10 +115,10 @@ function correctionDegree(degree) {
 ///// Dropabble
 	$('table td').droppable({
 		addClasses: false,
+		hoverClass: 'hoverDrop',
 		drop: function(e, ui) {
 			var degree = e.target;
-			var max = parseInt(degree.title);
-			if (degree.id == srcDegree.id || $(degree).children('.assertion').length >= max)
+			if (degree.id == srcDegree.id || $(degree).children('.assertion').length >= parseInt(degree.title))
 				return;
 			$(degree).append(ui.draggable);
 			correctionDegree(degree);
@@ -131,6 +135,8 @@ function correctionDegree(degree) {
 			else if (!$('button').attr('disabled'))
 				$('button').attr('disabled', 'disabled');
 		}
+	}).each(function(i, degree) {
+		$(degree).droppable({accept: 'table div:not(#' + degree.id + ' div)'});
 	});
 ///// cancelBigAssertion
 	function cancelBigAssertion(assertion) {
