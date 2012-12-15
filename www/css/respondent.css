@@ -23,15 +23,16 @@ button {
 }
 
 #nameSet {
-	 color: #F8F8F2;
-	 text-align: center;
-	 text-transform: uppercase;
-	 font-weight: normal;
+	color: #F8F8F2;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: normal;
 }
 
 table {
 	position: relative;
 	border-spacing: 0px;
+	scrollbar-face-color: expression( runtimeStyle.scrollbarFaceColor = '#fff', cellSpacing = parseInt(currentStyle['border-spacing'])); /* угадайте кто?*/  
 	table-layout: fixed;
 	margin: 12px auto;
 	background-color: #272822;
@@ -79,22 +80,19 @@ table div {
 	padding: 1px 2px;
 	border: 1px solid;
 	border-color: inherit;
-}
-
-table div.empty {
-	opacity: 0;
-}
-
-table div.assertion {
-	background-color: #F8F8F2;
-	color: #272822;
-	font-size: 11px;
 	text-align: left;
 	overflow: hidden;
 	word-wrap: break-word;
 }
 
-.bigAssertion {
+table div.assertion {
+	position: relative;
+	background-color: #F8F8F2;
+	color: #272822;
+	font-size: 11px;
+}
+
+table div.bigAssertion {
 	position: fixed;
 	z-index: 5000;
 	border: 8px solid #AE81FF;
@@ -102,11 +100,12 @@ table div.assertion {
 	color: #F8F8F2;
 	padding: 3px;
 	font-size: 12px;
-	text-align: left;
 	text-indent: 20px;
 	line-height: 18px;
-	overflow: hidden;
-	word-wrap: break-word;
+}
+
+table div.empty {
+	opacity: 0;
 }
 
 .hoverDrop {

@@ -1,4 +1,3 @@
-<!Doctype html>
 <html>
 <head>
 	<meta charset='utf-8' />
@@ -15,7 +14,7 @@
 	<button id='next' disabled='disabled'>Продовжити</button>
 	<?php
 	//read set from file
-		$set = json_decode(file_get_contents('set1 (40).json'), true);
+		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
 		echo "<h3 id='nameSet'>".$set['name']."</h3>";
 		$level = $set['level'];
 	//level2, level1

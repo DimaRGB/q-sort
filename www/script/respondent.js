@@ -3,12 +3,9 @@ $(document).ready(function() {
 ///// Global variable
 	var srcDegree, lowerLevel = 'level0';
 	var countTd = $('#level2 td').length;
-	var divWidth = parseInt(0.97 * $(window).width() / countTd / 2);
-	var divHeight = parseInt(1.4 * divWidth);
+	var divWidth, divHeight;
 	var isDrag = false, big = 2;
 ///// Original settings
-	//$('#nameSet, table').wrap('<div style="text-align:center;"></div>');
-	$('table td').height(big * divWidth);
 	for (var k = 0; k < 3; k++) {
 		var levelDegree = $('#level' + k + ' td');
 		levelDegree.each(function(i, degree) {
@@ -27,6 +24,7 @@ $(document).ready(function() {
 		el.title = el.innerText;
 	});
 	$('*').disableSelection();
+	resizeWindow();
 	$('#level2').hide();
 	$('#level0, #level1').css('opacity', '0');
 	$('#level1').animate({opacity: 0.3}, 300, function() {
@@ -39,13 +37,15 @@ $(document).ready(function() {
 	}
 ///// Resize
 	function resizeWindow() {
+		divWidth = parseInt(0.97 * $(window).width() / countTd / 2);
+		divHeight = parseInt(1.4 * divWidth);
 		setBounds('table div', 0, 0, divWidth, divHeight);
 		$('table').each(function(i, el) {
 			var td = $('#' + el.id + ' td');
 			td.width(divWidth * (parseInt($(window).width() / divWidth / td.length)));
+			td.height(big * divWidth);
 		});
 	}
-	resizeWindow();
 	$(window).resize(resizeWindow);
 ///// Button click
 	$('button').click(function(e) {
@@ -90,7 +90,7 @@ $(document).ready(function() {
 		addClasses: false,
 		containment: 'window',
 		cursor: 'move',
-		distance: 8,
+		distance: 10,
 		zIndex: 4000,
 		start: function(e) {
 			srcDegree = e.target.parentNode;
@@ -104,7 +104,7 @@ $(document).ready(function() {
 			var prevLength = $(e.target.parentNode).prevAll().length;
 			if (prevLength > nextLength)
 				currentFloat = 'right';
-			$(this).css({left: '', top: 0, zIndex: '', float: currentFloat});
+			$(this).css({left: '', top: '', zIndex: '', float: currentFloat});
 			$(this).animate({opacity: 0.7, left: -8, top: 2},
 				70).animate({opacity: 0.8, left: 8, top: 4},
 				70).animate({opacity: 0.9, left: -8, top: 2},
@@ -121,6 +121,7 @@ $(document).ready(function() {
 			if (degree.id == srcDegree.id || $(degree).children('.assertion').length >= parseInt(degree.title))
 				return;
 			$(degree).append(ui.draggable);
+			cancelBigAssertion(ui.draggable);
 			correctionDegree(degree);
 			correctionDegree(srcDegree);
 		///// Determine whether an lower level empty
@@ -140,13 +141,15 @@ $(document).ready(function() {
 	});
 ///// cancelBigAssertion
 	function cancelBigAssertion(assertion) {
-		$(assertion).attr('class', 'assertion');
-		setBounds(assertion, 0, 0, divWidth, divHeight);
+		if ($(assertion).hasClass('bigAssertion')) {
+			$(assertion).removeClass('bigAssertion').addClass('assertion');
+			setBounds(assertion, 0, 0, divWidth, divHeight);
+		}
 	}
 ///// Assertion click
 	$('table div.assertion').click(function(e) {
-		if ($(this).attr('class') == 'assertion') {
-			$(this).attr('class', 'bigAssertion');
+		if ($(this).hasClass('assertion')) {
+			$(this).removeClass('assertion').addClass('bigAssertion');
 			var w = big * divHeight, h = big * divWidth;
 			var l = e.clientX - w / 2, t = e.clientY - h / 2;
 			if (l < 0)
