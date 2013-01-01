@@ -61,15 +61,36 @@ $(document).ready(function() {
 				$('#level2').animate({opacity: 1}, 1500);
 			});
 		} else if (but.id == 'finish') {
-			var json = [];
-			count = parseInt($('#degree00').attr('title'));
+			if (!confirm('Це твоя остаточна відповідь?'))
+				return;
+			var mes, json = [], count = parseInt($('#degree00').attr('title'));
 			for (var i = 0; i < count; i++) {
 				var degree = $('#assertion' + i)[0].parentNode;
 				json[i] = parseInt(degree.id.substring('degree2'.length)) + 1;
 			}
-			alert(JSON.stringify(json));
+			mes = JSON.stringify(json);
+			//post_to_url("stage3.php", [mes], "POST");
+			alert(mes);
 		}
 	});
+///// make post request
+    function post_to_url(path, params, method) {
+        method = method || "post";
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+                form.appendChild(hiddenField);
+            }
+        }
+        document.body.appendChild(form);
+        form.submit();
+    }
 ///// Correction degree
 	function correctionDegree(degree) {
 		var level = degree.parentNode.parentNode.parentNode;
@@ -118,7 +139,10 @@ $(document).ready(function() {
 		hoverClass: 'hoverDrop',
 		drop: function(e, ui) {
 			var degree = e.target;
-			if (degree.id == srcDegree.id || $(degree).children('.assertion').length >= parseInt(degree.title))
+			var isEqualId = (degree.id == srcDegree.id);
+			var isLevel1 = ($(degree).parent().parent().parent().attr('id') == 'level1');
+			var isFull = ($(degree).children('.assertion').length >= parseInt(degree.title));
+			if (isEqualId || (!isLevel1 && isFull))
 				return;
 			$(degree).append(ui.draggable);
 			cancelBigAssertion(ui.draggable);

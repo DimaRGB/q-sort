@@ -21,11 +21,17 @@
 		for ($k = 2; $k > 0; $k--) {
 			echo "<table id='level$k'><tr>";
 			foreach ($level[$k] as $value => $count)
-				echo "<th>$count<br />$value</th>";
+				if ($k == 2)
+					echo "<th>$count<br />$value</th>";
+				else
+					echo "<th>$count</th>";
 			echo "</tr><tr>";
 			$i = 0;
 			foreach ($level[$k] as $value => $count)
-				echo "<td title='$count'></td>";
+				if ($k == 2)
+					echo "<td title='$count'></td>";
+				else
+					echo "<td></td>";
 			echo "</tr></table>";
 		}
 	//level0

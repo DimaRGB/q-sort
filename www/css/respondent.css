@@ -32,11 +32,13 @@ button {
 table {
 	position: relative;
 	border-spacing: 0px;
-	scrollbar-face-color: expression( runtimeStyle.scrollbarFaceColor = '#fff', cellSpacing = parseInt(currentStyle['border-spacing'])); /* угадайте кто?*/  
 	table-layout: fixed;
 	margin: 12px auto;
 	background-color: #272822;
+	-moz-box-shadow: 0px 4px 8px black;
+	-webkit-box-shadow: 0px 4px 8px black;
 	box-shadow: 0px 4px 8px black;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='black', Strength=8);
 }
 
 table th, table td {
@@ -44,14 +46,11 @@ table th, table td {
 }
 
 table th {
+	padding: 2px 0px;
 	font-size: 12px;
 	font-weight: normal;
 	overflow: hidden;
 	word-wrap: break-word;
-}
-
-table th:first-line {
-	color: #AE81FF;
 }
 
 #level2 th {
@@ -59,11 +58,16 @@ table th:first-line {
 }
 
 #level1 th {
+	padding: 5px 0px;
 	color: #E6DB74;
 }
 
 #level0 th {
 	color: #66D9EF;
+}
+
+#level2 th:first-line, #level0 th:first-line {
+	color: #AE81FF;
 }
 
 table td {
