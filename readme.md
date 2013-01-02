@@ -15,4 +15,4 @@ dima
 sdWs2
 
 git@dev.ddsun.pp.ua
-Password:BdNe52PAY5haswAS
+BdNe52PAY5haswAS

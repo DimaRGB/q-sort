@@ -14,17 +14,17 @@
 	<button id='next' disabled='disabled'>Продовжити</button>
 	<?php
 	//read set from file
-		$set = json_decode(file_get_contents('set1 (40)test.json'), true);
+		$set = json_decode(file_get_contents('set1 (40).json'), true);
 		echo "<h3 id='nameSet'>".$set['name']."</h3>";
 		$level = $set['level'];
 	//level2, level1
 		for ($k = 2; $k > 0; $k--) {
 			echo "<table id='level$k'><tr>";
-			foreach ($level[$k] as $value => $count)
+			foreach ($level[$k] as $key => $value)
 				if ($k == 2)
-					echo "<th>$count<br />$value</th>";
+					echo "<th>$value<br />$key</th>";
 				else
-					echo "<th>$count</th>";
+					echo "<th>$value</th>";
 			echo "</tr><tr>";
 			$i = 0;
 			foreach ($level[$k] as $value => $count)

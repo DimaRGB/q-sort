@@ -97,7 +97,7 @@ table div.assertion {
 }
 
 table div.bigAssertion {
-	position: fixed;
+	position: absolute;
 	z-index: 5000;
 	border: 8px solid #AE81FF;
 	background-color: #272822;

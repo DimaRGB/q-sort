@@ -109,7 +109,7 @@ $(document).ready(function() {
 ///// Draggable
 	$('table div.assertion').draggable({
 		addClasses: false,
-		containment: 'window',
+		containment: 'body',
 		cursor: 'move',
 		distance: 10,
 		zIndex: 4000,
@@ -173,17 +173,18 @@ $(document).ready(function() {
 ///// Assertion click
 	$('table div.assertion').click(function(e) {
 		if ($(this).hasClass('assertion')) {
-			$(this).removeClass('assertion').addClass('bigAssertion');
 			var w = big * divHeight, h = big * divWidth;
-			var l = e.clientX - w / 2, t = e.clientY - h / 2;
+			var l = parseInt($(this).position().left - (w - divWidth) / 2);
+			var t = parseInt($(this).position().top - (h - divHeight) / 2);
 			if (l < 0)
 				l = 0;
-			else if(l > window.innerWidth - w)
+			else if (l > window.innerWidth - w)
 				l = window.innerWidth - w;
 			if (t < 0)
 				t = 0;
-			else if(t > window.innerHeight - h)
+			else if (t > window.innerHeight - h)
 				t = window.innerHeight - h;
+			$(this).removeClass('assertion').addClass('bigAssertion');
 			setBounds(this, l, t, w, h);
 		} else
 			cancelBigAssertion(this);
